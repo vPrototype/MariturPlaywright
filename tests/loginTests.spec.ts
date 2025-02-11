@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { LoginPage } from './pageobjects/loginPage';
+import { LoginPage } from '../pageobjects/loginPage';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://mariturwebapp.azurewebsites.net');
