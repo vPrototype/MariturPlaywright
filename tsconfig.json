@@ -4,7 +4,8 @@
     "rootDir": "./",
     "module": "CommonJS",
     "target": "ES6",
-    "strict": true
+    "strict": true,
+    "resolveJsonModule": true
   },
   "include": ["tests/**/*.ts", "pageobjects/**/*.ts"]
 }
