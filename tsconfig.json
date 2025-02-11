@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./",
+    "module": "CommonJS",
+    "target": "ES6",
+    "strict": true
+  },
+  "include": ["tests/**/*.ts", "pageobjects/**/*.ts"]
+}
