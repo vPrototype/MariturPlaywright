@@ -28,12 +28,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        env: 
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          DEV_MARITUR_HOME_MODULE: ${{ secrets.DEV_MARITUR_HOME_MODULE }}
 
-        
+      - name: Set environment variables
+        run: |
+          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}" >> $GITHUB_ENV
+          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> $GITHUB_ENV
+          echo "DEV_MARITUR_HOME_MODULE=${{ secrets.DEV_MARITUR_HOME_MODULE }}" >> $GITHUB_ENV  
 
       - name: Install TypeScript
         run: npm install --save-dev typescript
