@@ -28,16 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Set up environment variables
-        env:
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          DEV_MARITUR_BRANCH_MODULE: ${{ vars.DEV_MARITUR_BRANCH_MODULE }}
-          DEV_MARITUR_HOME_MODULE: ${{ vars.DEV_MARITUR_HOME_MODULE }}
-          DEV_MARITUR_ITINERARY_MODULE: ${{ vars.DEV_MARITUR_ITINERARY_MODULE }}
-          DEV_MARITUR_USER_MODULE: ${{ vars.DEV_MARITUR_USER_MODULE }}
-
+      
       - name: Install TypeScript
         run: npm install --save-dev typescript
 
