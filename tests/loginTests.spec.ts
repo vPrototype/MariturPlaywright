@@ -1,17 +1,22 @@
 import { test } from '@playwright/test';
 import { LoginPage } from '../pageobjects/LoginPage';
-import { AdminUser } from '../fixture/testData.json';
-import { Enviroments } from '../fixture/testData.json';
+
 
 test.beforeEach(async ({ page }) => {
-  await page.goto(Enviroments.dev);
+
+  const mariturDEV = process.env.DEV_MARITUR_HOME_MODULE!;
+
+  await page.goto(mariturDEV);
 });
 
 test('loginTest', async ({ page }) => {
  
+  const adminEmail = process.env.ADMIN_EMAIL!;
+  const adminPassword = process.env.ADMIN_PASSWORD!;
+  
   const loginPage = new LoginPage(page)
   
-  await loginPage.loginEmailAndPassword(AdminUser.username, AdminUser.password);
+  await loginPage.loginEmailAndPassword(adminEmail, adminPassword);
   await loginPage.checkSuccessfulLogin();
 
 });

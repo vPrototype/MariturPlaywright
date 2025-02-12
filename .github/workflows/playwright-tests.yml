@@ -1,47 +1,62 @@
 name: Playwright Tests
+
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
+    env:
+      NODE_ENV: test
+      CI: true
+    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # Obtiene el historial completo del repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Obtiene el historial completo del repo
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Install TypeScript
-      run: npm install --save-dev typescript
+      - name: Set up environment variables
+        env:
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          DEV_MARITUR_BRANCH_MODULE: ${{ vars.DEV_MARITUR_BRANCH_MODULE }}
+          DEV_MARITUR_HOME_MODULE: ${{ vars.DEV_MARITUR_HOME_MODULE }}
+          DEV_MARITUR_ITINERARY_MODULE: ${{ vars.DEV_MARITUR_ITINERARY_MODULE }}
+          DEV_MARITUR_USER_MODULE: ${{ vars.DEV_MARITUR_USER_MODULE }}
 
-    - name: Compile TypeScript
-      run: npx tsc --project tsconfig.json
+      - name: Install TypeScript
+        run: npm install --save-dev typescript
 
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      - name: Compile TypeScript
+        run: npx tsc --project tsconfig.json
 
-    - name: Run Playwright tests
-      run: npx playwright test
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
 
-    - name: Set permissions for Playwright report
-      run: chmod -R 777 playwright-report/
+      - name: Run Playwright tests
+        run: npx playwright test
 
-    - name: Upload Playwright report
-      uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      - name: Set permissions for Playwright report
+        run: chmod -R 777 playwright-report/
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
