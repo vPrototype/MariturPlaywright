@@ -1,9 +1,10 @@
 import { test } from '@playwright/test';
 import { LoginPage } from '../pageobjects/LoginPage';
 import { AdminUser } from '../fixture/testData.json';
+import { Enviroments } from '../fixture/testData.json';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('https://mariturwebapp.azurewebsites.net');
+  await page.goto(Enviroments.dev);
 });
 
 test('loginTest', async ({ page }) => {
