@@ -31,6 +31,8 @@ jobs:
         env: 
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          DEV_MARITUR_HOME_MODULE: ${{ secrets.DEV_MARITUR_HOME_MODULE }}
+
         
 
       - name: Install TypeScript
