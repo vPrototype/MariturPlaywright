@@ -28,7 +28,11 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-      
+        env: 
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        
+
       - name: Install TypeScript
         run: npm install --save-dev typescript
 
