@@ -44,32 +44,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Debug Environment Variables
-        run: |
-          echo " Verificando variables de entorno..."
-          printenv | grep 'DEV_MARITUR'
-          echo " ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}"
-          echo " ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}"
-        shell: bash
-
       - name: Run Playwright tests
         run: |
           npx playwright test
-          echo "Running Playwright with secrets and vars
-          echo " ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}"
-          echo " ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}"
-          echo " DEV_MARITUR_HOME_MODULE: ${{ vars.DEV_MARITUR_HOME_MODULE }} "
-          echo " DEV_MARITUR_ITINERARY_MODULE: ${{ vars.DEV_MARITUR_ITINERARY_MODULE }} "
-          echo " DEV_MARITUR_USER_MODULE: ${{ vars.DEV_MARITUR_USER_MODULE }} "
-          echo " DEV_MARITUR_BRANCH_MODULE: ${{ vars.DEV_MARITUR_BRANCH_MODULE }} "
-
-        env:
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          DEV_MARITUR_HOME_MODULE: ${{ vars.DEV_MARITUR_HOME_MODULE }}
-          DEV_MARITUR_ITINERARY_MODULE: ${{ vars.DEV_MARITUR_ITINERARY_MODULE }}
-          DEV_MARITUR_USER_MODULE: ${{ vars.DEV_MARITUR_USER_MODULE }}
-          DEV_MARITUR_BRANCH_MODULE: ${{ vars.DEV_MARITUR_BRANCH_MODULE }}
 
       - name: Set permissions for Playwright report (if exists)
         run: |
