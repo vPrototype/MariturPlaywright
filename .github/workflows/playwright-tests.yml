@@ -48,10 +48,18 @@ jobs:
         run: |
           echo "Verifying environment variables..."
           echo "DEV_MARITUR_HOME_MODULE=${{ vars.DEV_MARITUR_HOME_MODULE }}"
+          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}"
+          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}"
         shell: bash
 
       - name: Run Playwright tests
-        run: npx playwright test
+        run: |
+          echo "Running Playwright with URL: $DEV_MARITUR_HOME_MODULE"
+          npx playwright test
+        env:
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          DEV_MARITUR_HOME_MODULE: ${{ secrets.DEV_MARITUR_HOME_MODULE }}
 
       - name: Set permissions for Playwright report (if exists)
         run: |
