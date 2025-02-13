@@ -14,7 +14,13 @@ jobs:
     env:
       NODE_ENV: test
       CI: true
-    
+      ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      DEV_MARITUR_HOME_MODULE: ${{ vars.DEV_MARITUR_HOME_MODULE }}
+      DEV_MARITUR_ITINERARY_MODULE: ${{ vars.DEV_MARITUR_ITINERARY_MODULE }}
+      DEV_MARITUR_USER_MODULE: ${{ vars.DEV_MARITUR_USER_MODULE}}
+      DEV_MARITUR_BRANCH_MODULE: ${{ vars.DEV_MARITUR_BRANCH_MODULE }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,12 +35,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Set environment variables
-        run: |
-          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}" >> $GITHUB_ENV
-          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> $GITHUB_ENV
-          echo "DEV_MARITUR_HOME_MODULE=${{ secrets.DEV_MARITUR_HOME_MODULE }}" >> $GITHUB_ENV  
-
       - name: Install TypeScript
         run: npm install --save-dev typescript
 
@@ -46,6 +46,13 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test
+        env:
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          DEV_MARITUR_HOME_MODULE: ${{ vars.DEV_MARITUR_HOME_MODULE }}
+          DEV_MARITUR_ITINERARY_MODULE: ${{ vars.DEV_MARITUR_ITINERARY_MODULE }}
+          DEV_MARITUR_USER_MODULE: ${{ vars.DEV_MARITUR_USER_MODULE}}
+          DEV_MARITUR_BRANCH_MODULE: ${{ vars.DEV_MARITUR_BRANCH_MODULE }}
 
       - name: Set permissions for Playwright report
         run: chmod -R 777 playwright-report/
