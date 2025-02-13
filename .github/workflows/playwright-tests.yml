@@ -54,6 +54,7 @@ jobs:
 
       - name: Run Playwright tests
         run: |
+          npx playwright test
           echo "Running Playwright with secrets and vars
           echo " ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}"
           echo " ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}"
