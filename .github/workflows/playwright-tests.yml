@@ -32,6 +32,7 @@ jobs:
         with:
           node-version: lts/*
           cache: 'npm'  # Acelera las instalaciones
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
