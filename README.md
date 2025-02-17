@@ -3,7 +3,7 @@
 ![Playwright Logo](https://playwright.dev/img/playwright-logo.svg)
 
 ## Descripción
-MariturPlaywright es un proyecto de automatización de pruebas utilizando [Playwright](https://playwright.dev/), una poderosa librería para la automatización de navegadores.
+MariturPlaywright es un proyecto de automatización de pruebas utilizando [Playwright](https://playwright.dev/), una poderosa librería para la automatización.
 
 Este repositorio contiene scripts de prueba para la aplicación Maritur, garantizando la calidad y estabilidad del sistema mediante pruebas end-to-end (E2E).
 
