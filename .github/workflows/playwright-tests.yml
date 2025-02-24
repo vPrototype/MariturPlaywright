@@ -16,19 +16,20 @@ jobs:
       CI: true
       ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
       ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-      DEV_MARITUR_HOME_MODULE: ${{ vars.DEV_MARITUR_HOME_MODULE }}
-      DEV_MARITUR_ITINERARY_MODULE: ${{ vars.DEV_MARITUR_ITINERARY_MODULE }}
-      DEV_MARITUR_USER_MODULE: ${{ vars.DEV_MARITUR_USER_MODULE }}
-      DEV_MARITUR_BRANCH_MODULE: ${{ vars.DEV_MARITUR_BRANCH_MODULE }}
-      DEV_MARITUR_SERVICE_MODULE: ${{ vars.DEV_MARITUR_SERVICE_MODULE }}
-      DEV_MARITUR_DOCUMENT_MODULE: ${{ vars.DEV_MARITUR_DOCUMENT_MODULE }}
-      DEV_MARITUR_ROLE_MODULE: ${{ vars.DEV_MARITUR_ROLE_MODULE }}
-      DEV_MARITUR_SUPPLIER_MODULE: ${{ vars.DEV_MARITUR_SUPPLIER_MODULE }}
-      DEV_MARITUR_BANKACCOUNT_MODULE: ${{ vars.DEV_MARITUR_BANKACCOUNT_MODULE }}
-      DEV_MARITUR_CONCESSIONAIRE_MODULE: ${{ vars.DEV_MARITUR_CONCESSIONAIRE_MODULE }}
-      DEV_MARITUR_CLIENT_MODULE: ${{ vars.DEV_MARITUR_CLIENT_MODULE }}
-      DEV_MARITUR_HOTEL_MODULE: ${{ vars.DEV_MARITUR_HOTEL_MODULE }}
-      DEV_MARITUR_CONFIG_MODULE: ${{ vars.DEV_MARITUR_CONFIG_MODULE }}
+      MARITUR_HOME_MODULE: ${{ vars.MARITUR_HOME_MODULE }}
+      MARITUR_ITINERARY_MODULE: ${{ vars.MARITUR_ITINERARY_MODULE }}
+      MARITUR_USER_MODULE: ${{ vars.MARITUR_USER_MODULE }}
+      MARITUR_BRANCH_MODULE: ${{ vars.MARITUR_BRANCH_MODULE }}
+      MARITUR_SERVICE_MODULE: ${{ vars.MARITUR_SERVICE_MODULE }}
+      MARITUR_DOCUMENT_MODULE: ${{ vars.MARITUR_DOCUMENT_MODULE }}
+      MARITUR_ROLE_MODULE: ${{ vars.MARITUR_ROLE_MODULE }}
+      MARITUR_SUPPLIER_MODULE: ${{ vars.MARITUR_SUPPLIER_MODULE }}
+      MARITUR_BANKACCOUNT_MODULE: ${{ vars.MARITUR_BANKACCOUNT_MODULE }}
+      MARITUR_CONCESSIONAIRE_MODULE: ${{ vars.MARITUR_CONCESSIONAIRE_MODULE }}
+      MARITUR_CLIENT_MODULE: ${{ vars.MARITUR_CLIENT_MODULE }}
+      MARITUR_HOTEL_MODULE: ${{ vars.MARITUR_HOTEL_MODULE }}
+      MARITUR_CONFIG_MODULE: ${{ vars.MARITUR_CONFIG_MODULE }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -39,11 +40,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-          cache: 'npm'  # Acelera las instalaciones
+          cache: 'npm'
           cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Verify environment variables
+        run: env | grep MARITUR  
 
       - name: Install TypeScript & Compile
         run: |
@@ -54,8 +58,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: |
-          npx playwright test
+        run: npx playwright test
 
       - name: Set permissions for Playwright report (if exists)
         run: |
@@ -65,7 +68,7 @@ jobs:
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
-        if: always()  # Asegura que se suba incluso si fallan los tests
+        if: always()
         with:
           name: playwright-report
           path: playwright-report/

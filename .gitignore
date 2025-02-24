@@ -7,3 +7,5 @@ node_modules/
 /playwright/.cache/
 **/homePageTest.spec.ts-snapshots/
 .env
+.env.dev
+.env.stage

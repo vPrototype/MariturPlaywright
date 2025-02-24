@@ -2,7 +2,10 @@
   "name": "mariturautomation",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:dev": "cross-env NODE_ENV=dev npx playwright test",
+    "test:stage": "cross-env NODE_ENV=stage npx playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -10,6 +13,7 @@
   "devDependencies": {
     "@playwright/test": "^1.50.1",
     "@types/node": "^22.13.1",
+    "cross-env": "^7.0.3",
     "typescript": "^5.7.3"
   },
   "dependencies": {
