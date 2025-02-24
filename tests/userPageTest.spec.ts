@@ -1,19 +1,19 @@
 import { test } from '@playwright/test';
 import { Helper } from '../utils/Helpers';
 import { UserPage } from '../pageobjects/UserPage';
-import { HomePage } from '../pageobjects/HomePage';
+import { config } from '../config/globalSettings';
 
 
 test.beforeEach(async ({ page }) => {
   
-  const mariturDEV = process.env.DEV_MARITUR_HOME_MODULE!;
-  const adminEmail = process.env.ADMIN_EMAIL!;
-  const adminPassword = process.env.ADMIN_PASSWORD!;
+  const matiturHome = config.urls.Home_Url;
+  const adminEmail = config.credentials.adminUser;
+  const adminPassword = config.credentials.adminPass;
 
 
   const helper = new Helper(page)
 
-  await page.goto(mariturDEV);
+  await page.goto(matiturHome);
   await helper.loginAdmin(adminEmail,adminPassword)
 });
 

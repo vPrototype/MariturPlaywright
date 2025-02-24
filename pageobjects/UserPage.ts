@@ -1,3 +1,4 @@
+import { config } from '../config/globalSettings';
 import { expect, Page, Locator } from "@playwright/test";
 import { HomePage } from '../pageobjects/HomePage';
 
@@ -5,7 +6,7 @@ export class UserPage{
 
     //Localizadores
     private addUserButton: Locator
-    private addUserUrl: string
+
     private addUserTextboxName: Locator
     private addUserTextboxSecondName: Locator
     private addUserTextboxLastname: Locator
@@ -18,17 +19,19 @@ export class UserPage{
     private addUserComboBoxConcessionaire: Locator
     private addUserComboBoxConcessionaireOption: Locator
     private addUserSaveButton: Locator
-    private userModuleUrl: string
+    
+
+    private mariturUser_AddUser: string
+    private mariturUser: string
+    
 
 
     constructor (private readonly page:Page){
 
-        const mariturDevUser_AddUser = process.env.DEV_MARITUR_USER_MODULE_ADDUSER!;
-        const mariturDevUser = process.env.DEV_MARITUR_USER_MODULE!;
-
+        this.mariturUser_AddUser = config.urls.userModuleAddUserUrl;
+        this.mariturUser = config.urls.userModuleUrl;
 
         this.addUserButton = page.getByRole('button', { name: 'Agregar Usuario' });
-        this.addUserUrl = mariturDevUser_AddUser;
         this.addUserTextboxName = page.getByRole('textbox', { name: 'Nombre', exact: true });
         this.addUserTextboxSecondName = page.getByRole('textbox', { name: 'Segundo Nombre' });
         this.addUserTextboxLastname = page.getByRole('textbox', { name: 'Primer Apellido' });
@@ -41,7 +44,7 @@ export class UserPage{
         this.addUserComboBoxConcessionaire = page.locator('div:nth-child(8) > .MuiAutocomplete-root > .MuiFormControl-root > .MuiInputBase-root');
         this.addUserComboBoxConcessionaireOption = page.getByRole('option', { name: 'Hotel Flamingo Mérida' });
         this.addUserSaveButton = page.getByRole('button', { name: 'Agregar' });
-        this.userModuleUrl = mariturDevUser;
+        
 
     }
 
@@ -53,7 +56,7 @@ export class UserPage{
        
         await this.addUserButton.waitFor();
         await this.addUserButton.click();
-        await expect(this.page).toHaveURL(this.addUserUrl);
+        await expect(this.page).toHaveURL(this.mariturUser_AddUser);
         await this.addUserTextboxName.click();
         await this.addUserTextboxName.fill('Prueba');
         await this.addUserTextboxSecondName.click();
@@ -71,7 +74,7 @@ export class UserPage{
         await this.addUserComboBoxConcessionaire.click();
         await this.addUserComboBoxConcessionaireOption.click();
         await this.addUserSaveButton.click();
-        await expect(this.page).toHaveURL(this.userModuleUrl);
+        await expect(this.page).toHaveURL(this.mariturUser);
 
     }
 }
