@@ -2,7 +2,6 @@ import { config } from '../config/globalSettings';
 import { expect, Page, Locator } from "@playwright/test";
 import { HomePage } from '../pageobjects/HomePage';
 import { faker } from '@faker-js/faker';
-import { L } from '@faker-js/faker/dist/airline-BcEu2nRk';
 
 export class UserPage{
 
