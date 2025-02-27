@@ -22,8 +22,37 @@ test('Create User test', async ({ page }) => {
   const userPage = new UserPage(page)
 
   await userPage.addUser();
-  
-  
 
-  
+});
+
+test('Edit User test', async ({ page }) => {
+
+  const userPage = new UserPage(page)
+
+  await userPage.editUser();
+
+});
+
+test('Edit Permissions User test', async ({ page }) => {
+
+  const userPage = new UserPage(page)
+
+  await userPage.editUserPermissions();
+
+});
+
+test('Disable/Enable User test', async ({ page }) => {
+
+  const userPage = new UserPage(page)
+
+  await userPage.disableEnableUser();
+
+});
+
+test('Delete User test', async ({ page }) => {
+
+  const userPage = new UserPage(page)
+
+  await userPage.deleteUser();
+
 });
