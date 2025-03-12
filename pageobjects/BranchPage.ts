@@ -71,8 +71,8 @@ export class BranchPage{
         this.lastName = faker.person.lastName();
         this.secondLastName = faker.person.lastName();
         this.email = faker.internet.email({ firstName: this.firstName, lastName: this.lastName, provider: 'luxecita.com' });
-        
-        const homePage = new HomePage(this.page);
+
+        const homePage = new HomePage(this.page)
 
         await step('GIVEN the user is on the branch module page', async () => {
             await homePage.goToBranchModule();
@@ -84,6 +84,7 @@ export class BranchPage{
         });
     
         await step('THEN the user should be redirected to the "Add Branch" form', async () => {
+            await this.page.waitForURL(this.mariturBranch_AddBranch);
             await expect(this.page).toHaveURL(this.mariturBranch_AddBranch);
         });
     
