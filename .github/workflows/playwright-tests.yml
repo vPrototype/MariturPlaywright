@@ -35,38 +35,56 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1  # Más eficiente para CI/CD
+          fetch-depth: 1
 
+      #Cache para npm usando actions/cache@v4
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: node-cache-Linux-x64-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            node-cache-Linux-x64-npm-
+              
+      # Setup del Node
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: 'npm'
           cache-dependency-path: package-lock.json
-
+      # Instalar dependencias
       - name: Install dependencies
         run: npm ci
-
+      
+      # Verificar variables de entorno
       - name: Verify environment variables
         run: env | grep MARITUR  
-
+      
+      # Instalar Typescript 
       - name: Install TypeScript & Compile
         run: |
           npm install --save-dev typescript
           npx tsc --project tsconfig.json
-
+      
+      # Instalacion de Browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-
+      
+      # Ejecución de pruebas      
       - name: Run Playwright tests
         run: npx playwright test
         env:
           CI: true
 
+      # Generar reporte
       - name: Generate Allure Report
+        if: always()
         run: npx allure generate test-results/ --clean -o allure-report
-     
+      
+      # Subir reporte
       - name: Upload Allure Report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
