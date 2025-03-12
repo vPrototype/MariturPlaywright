@@ -23,6 +23,7 @@ jobs:
       MARITUR_USER_MODULE: ${{ vars.MARITUR_USER_MODULE }}
       MARITUR_USER_MODULE_ADDUSER: ${{ vars.MARITUR_USER_MODULE_ADDUSER }}
       MARITUR_BRANCH_MODULE: ${{ vars.MARITUR_BRANCH_MODULE }}
+      MARITUR_BRANCH_MODULE_ADDBRANCH: ${{ vars.MARITUR_USER_MODULE_ADDUSER }}
       MARITUR_SERVICE_MODULE: ${{ vars.MARITUR_SERVICE_MODULE }}
       MARITUR_DOCUMENT_MODULE: ${{ vars.MARITUR_DOCUMENT_MODULE }}
       MARITUR_ROLE_MODULE: ${{ vars.MARITUR_ROLE_MODULE }}
@@ -95,15 +96,16 @@ jobs:
           retention-days: 5  # Limpieza automática después de 5 días
 
       # Generar y subir el reporte HTML de Playwright
-      - name: Generate Playwright HTML Report
+      - name: Set permissions for Playwright report (if exists)
         run: |
-          npx playwright show-report
-        if: always()
+          if [ -d "playwright-report" ]; then
+            chmod -R 777 playwright-report/
+          fi
 
-      - name: Upload Playwright HTML Report
-        if: always()
+      - name: Upload Playwright report
         uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: playwright-html-report
-          path: playwright-report
-          retention-days: 5  # Limpieza automática después de 5 días
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 5
