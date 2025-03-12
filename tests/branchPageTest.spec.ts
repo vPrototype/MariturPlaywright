@@ -24,7 +24,6 @@ test.describe.serial('Branch Module - Test execution schedule',() => {
   test('Create a new branch', async ({ page }) => {
   
     const branchPage = new BranchPage(page)
-  
     await branchPage.addBranch();
     
   })
@@ -32,8 +31,21 @@ test.describe.serial('Branch Module - Test execution schedule',() => {
   test('Edit an existing branch', async ({ page }) => {
   
     const branchPage = new BranchPage(page)
-  
     await branchPage.editBranch();
+    
+  })
+
+  test('Disable/Enable an existing branch', async ({ page }) => {
+  
+    const branchPage = new BranchPage(page)
+    await branchPage.disableEnableBranch();
+    
+  })
+
+  test('Delete an existing branch', async ({ page }) => {
+  
+    const branchPage = new BranchPage(page)
+    await branchPage.deleteBranch();
     
   })
 

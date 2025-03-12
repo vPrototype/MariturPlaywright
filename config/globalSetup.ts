@@ -7,7 +7,7 @@ export default async function globalSetup() {
 
     // Define las rutas de las carpetas a eliminar
     const allureResultsPath = path.resolve('allure-results');
-    const allureReportPath = path.resolve('allure-report');
+    const allureReportPath = path.resolve('allure-report');  
 
     try {
         if (fs.existsSync(allureResultsPath)) {

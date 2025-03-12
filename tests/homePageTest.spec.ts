@@ -22,7 +22,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access ITINERARIES module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToItineraryModule();
     
   });
@@ -30,7 +29,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access USER module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToUserModule();
     
   });
@@ -38,7 +36,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access BRANCH module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToBranchModule();
     
   });
@@ -46,7 +43,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access SERVICE module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToServiceModule();
     
   });
@@ -54,7 +50,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access DOCUMENT module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToDocumentModule();
     
   });
@@ -62,7 +57,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access ROLE module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToRoleModule();
     
   });
@@ -70,7 +64,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access SUPPLIER module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToSupplierModule();
     
   });
@@ -78,7 +71,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access BANK ACCOUNT module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToBankAccountModule();
     
   });
@@ -86,7 +78,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access CONCESSIONAIRE module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToConcessionaireModule();
     
   });
@@ -94,7 +85,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access CLIENT module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToClientModule();
     
   });
@@ -102,7 +92,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access HOTEL module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToHotelModule();
     
   });
@@ -110,7 +99,6 @@ test.describe('Access to ADMON Modules',() => {
   test('Access CONFIG module', async ({ page }) => {
   
     const homePage = new HomePage(page)
-  
     await homePage.goToConfigModule();
     
   });

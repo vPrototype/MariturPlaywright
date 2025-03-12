@@ -124,7 +124,7 @@ export class BranchPage{
         await step('AND the user fill out the filter and edit the branch', async () => {
             const helper = new Helper(this.page)
             await helper.filterValue(this.filterDataOption);
-            await helper.selectFirstItemFiltered();
+            await helper.editFirstItemFiltered();
         });
     
         await step('THEN the user should be redirected to the "Add Branch" form', async () => {
@@ -154,6 +154,37 @@ export class BranchPage{
         await step('THEN the user should be redirected to the branch listing page', async () => {
             await expect(this.page).toHaveURL(this.mariturBranch);
         });
+    }
+
+    async disableEnableBranch(){
+
+        const homePage = new HomePage(this.page);
+
+        await step('GIVEN the user is on the branch module page', async () => {
+            await homePage.goToBranchModule();
+        });
+
+        await step('AND the user fill out the filter and disable/enable the branch ', async () => {
+            const helper = new Helper(this.page)
+            await helper.filterValue(this.filterDataOption);
+            await helper.DisableEnableFirstItemFiltered();
+        });
+    }
+
+    async deleteBranch(){
+
+        const homePage = new HomePage(this.page);
+
+        await step('GIVEN the user is on the branch module page', async () => {
+            await homePage.goToBranchModule();
+        });
+
+        await step('AND the user fill out the filter and delete the branch ', async () => {
+            const helper = new Helper(this.page)
+            await helper.filterValue(this.filterDataOption);
+            await helper.DeleteFirstItemFiltered();
+        });
+
     }
 
 

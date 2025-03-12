@@ -28,6 +28,7 @@ export default defineConfig({
   // Configuración del entorno de pruebas
   use: {
     headless: process.env.CI ? true : false,  // Dependiendo del entorno
+    //headless: true,
     baseURL: process.env.BASE_URL,  // Base URL desde las variables de entorno
     screenshot: 'on',  // Tomar capturas en cada paso
     video: 'retain-on-failure',  // Guardar video solo si falla la prueba

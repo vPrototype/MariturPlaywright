@@ -28,9 +28,8 @@ test.describe.serial('User Module - Test execution schedule', () => {
   });
 
   test('Edit User test', async ({ page }) => {
-
+  
     const userPage = new UserPage(page)
-
     await userPage.editUser();
 
   });
