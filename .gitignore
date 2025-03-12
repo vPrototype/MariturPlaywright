@@ -6,6 +6,8 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 **/homePageTest.spec.ts-snapshots/
-.env
-.env.dev
-.env.stage
+.env/
+.env.dev/
+.env.stage/
+allure-report/
+allure-results/

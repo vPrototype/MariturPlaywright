@@ -17,98 +17,102 @@ test.beforeEach(async ({ page }) => {
   await page.waitForLoadState('networkidle');
 });
 
-test('accessItineraryModuleTest', async ({ page }) => {
+test.describe('Access to ADMON Modules',() => {
 
-  const homePage = new HomePage(page)
-
-  await homePage.goToItineraryModule();
+  test('Access ITINERARIES module', async ({ page }) => {
   
-});
-
-test('accessUserModuleTest', async ({ page }) => {
-
-  const homePage = new HomePage(page)
-
-  await homePage.goToUserModule();
+    const homePage = new HomePage(page)
   
-});
-
-test('accessBranchModuleTest', async ({ page }) => {
-
-  const homePage = new HomePage(page)
-
-  await homePage.goToBranchModule();
+    await homePage.goToItineraryModule();
+    
+  });
   
-});
-
-test('accessServiceModuleTest', async ({ page }) => {
-
-  const homePage = new HomePage(page)
-
-  await homePage.goToServiceModule();
+  test('Access USER module', async ({ page }) => {
   
-});
-
-test('accessDocumentModuleTest', async ({ page }) => {
-
-  const homePage = new HomePage(page)
-
-  await homePage.goToDocumentModule();
+    const homePage = new HomePage(page)
   
-});
-
-test('accessRoleModuleTest', async ({ page }) => {
-
-  const homePage = new HomePage(page)
-
-  await homePage.goToRoleModule();
+    await homePage.goToUserModule();
+    
+  });
   
-});
-
-test('accessSupplierModuleTest', async ({ page }) => {
-
-  const homePage = new HomePage(page)
-
-  await homePage.goToSupplierModule();
+  test('Access BRANCH module', async ({ page }) => {
   
-});
-
-test('accessBankAccountModuleTest', async ({ page }) => {
-
-  const homePage = new HomePage(page)
-
-  await homePage.goToBankAccountModule();
+    const homePage = new HomePage(page)
   
-});
-
-test('accessConcessionaireModuleTest', async ({ page }) => {
-
-  const homePage = new HomePage(page)
-
-  await homePage.goToConcessionaireModule();
+    await homePage.goToBranchModule();
+    
+  });
   
-});
-
-test('accessClientModuleTest', async ({ page }) => {
-
-  const homePage = new HomePage(page)
-
-  await homePage.goToClientModule();
+  test('Access SERVICE module', async ({ page }) => {
   
-});
-
-test('accessHotelModuleTest', async ({ page }) => {
-
-  const homePage = new HomePage(page)
-
-  await homePage.goToHotelModule();
+    const homePage = new HomePage(page)
   
-});
-
-test('accessConfigModuleTest', async ({ page }) => {
-
-  const homePage = new HomePage(page)
-
-  await homePage.goToConfigModule();
+    await homePage.goToServiceModule();
+    
+  });
   
-});
+  test('Access DOCUMENT module', async ({ page }) => {
+  
+    const homePage = new HomePage(page)
+  
+    await homePage.goToDocumentModule();
+    
+  });
+  
+  test('Access ROLE module', async ({ page }) => {
+  
+    const homePage = new HomePage(page)
+  
+    await homePage.goToRoleModule();
+    
+  });
+  
+  test('Access SUPPLIER module', async ({ page }) => {
+  
+    const homePage = new HomePage(page)
+  
+    await homePage.goToSupplierModule();
+    
+  });
+  
+  test('Access BANK ACCOUNT module', async ({ page }) => {
+  
+    const homePage = new HomePage(page)
+  
+    await homePage.goToBankAccountModule();
+    
+  });
+  
+  test('Access CONCESSIONAIRE module', async ({ page }) => {
+  
+    const homePage = new HomePage(page)
+  
+    await homePage.goToConcessionaireModule();
+    
+  });
+  
+  test('Access CLIENT module', async ({ page }) => {
+  
+    const homePage = new HomePage(page)
+  
+    await homePage.goToClientModule();
+    
+  });
+  
+  test('Access HOTEL module', async ({ page }) => {
+  
+    const homePage = new HomePage(page)
+  
+    await homePage.goToHotelModule();
+    
+  });
+  
+  test('Access CONFIG module', async ({ page }) => {
+  
+    const homePage = new HomePage(page)
+  
+    await homePage.goToConfigModule();
+    
+  });
+
+})

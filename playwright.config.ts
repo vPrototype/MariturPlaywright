@@ -12,11 +12,18 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  globalSetup: require.resolve('./config/globalSetup.ts'),
+  reporter: [
+    ['list'],
+    ['allure-playwright']
+  ],  //'html', <-- antigua configuración antes de instalar allure reports
   use: {
-    headless: true, // Desactiva el modo headless para todos los proyectos
+    headless: false, // Desactiva el modo headless para todos los proyectos
     baseURL: process.env.BASE_URL,
-    trace: 'on-first-retry',
+    //trace: 'on-first-retry', <-- antigua configuración antes de instalar allure
+    screenshot: 'on',
+    video: 'retain-on-failure',
+    trace: 'retain-on-failure',
   },
   /* Configure projects for major browsers */
   projects: [

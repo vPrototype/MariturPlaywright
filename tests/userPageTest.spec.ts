@@ -17,42 +17,43 @@ test.beforeEach(async ({ page }) => {
   await helper.loginAdmin(adminEmail,adminPassword)
 });
 
-test('Create User test', async ({ page }) => {
 
-  const userPage = new UserPage(page)
+test.describe.serial('User Module - Test execution schedule', () => {
 
-  await userPage.addUser();
+  test('Create User test', async ({ page }) => {
 
-});
+    const userPage = new UserPage(page)
+    await userPage.addUser();
 
-test('Edit User test', async ({ page }) => {
+  });
 
-  const userPage = new UserPage(page)
+  test('Edit User test', async ({ page }) => {
 
-  await userPage.editUser();
+    const userPage = new UserPage(page)
 
-});
+    await userPage.editUser();
 
-test('Edit Permissions User test', async ({ page }) => {
+  });
 
-  const userPage = new UserPage(page)
+  test('Edit Permissions User test', async ({ page }) => {
 
-  await userPage.editUserPermissions();
+    const userPage = new UserPage(page)
+    await userPage.editUserPermissions();
 
-});
+  });
 
-test('Disable/Enable User test', async ({ page }) => {
+  test('Disable/Enable User test', async ({ page }) => {
 
-  const userPage = new UserPage(page)
+    const userPage = new UserPage(page)
+    await userPage.disableEnableUser();
 
-  await userPage.disableEnableUser();
+  });
 
-});
+  test('Delete User test', async ({ page }) => {
 
-test('Delete User test', async ({ page }) => {
+    const userPage = new UserPage(page)
+    await userPage.deleteUser();
 
-  const userPage = new UserPage(page)
-
-  await userPage.deleteUser();
+  });
 
 });

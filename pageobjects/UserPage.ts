@@ -2,6 +2,9 @@ import { config } from '../config/globalSettings';
 import { expect, Page, Locator } from "@playwright/test";
 import { HomePage } from '../pageobjects/HomePage';
 import { faker } from '@faker-js/faker';
+import { step } from "allure-js-commons";
+
+
 
 export class UserPage{
 
@@ -111,131 +114,229 @@ export class UserPage{
 
     }
 
+
     async addUser() {  
         this.firstName = faker.person.firstName();
         this.secondName = faker.person.firstName();
         this.lastName = faker.person.lastName();
         this.secondLastName = faker.person.lastName();
         this.email = faker.internet.email({ firstName: this.firstName, lastName: this.lastName, provider: 'luxecita.com' });
-        
-        const homePage = new HomePage(this.page);
-        
-        await homePage.goToUserModule();
-        await this.addUserButton.waitFor();
-        await this.addUserButton.click();
-        await expect(this.page).toHaveURL(this.mariturUser_AddUser);
-        await this.addUserTextboxName.fill(this.firstName);
-        await this.addUserTextboxSecondName.fill(this.secondName);
-        await this.addUserTextboxLastname.fill(this.lastName);
-        await this.addUserTextboxSecondLastname.fill(this.secondLastName);
-        await this.addUserTextboxEmail.fill(this.email);
-        await this.addUserDropdownRole.first().click();
-        await this.addUserDropdownRoleAdmin.click();
-        await this.addUserComboBoxBranch.click();
-        await this.addUserComboBoxBranchOption.click();
-        await this.addUserComboBoxConcessionaire.click();
-        await this.addUserComboBoxConcessionaireOption.click();
-        await this.addUserSaveButton.click();
 
-        await expect(this.page).toHaveURL(this.mariturUser);
+        const homePage = new HomePage(this.page);
+
+        await step('GIVEN I am on the user module page', async () => {
+            await homePage.goToUserModule();
+        });
+
+        await step('WHEN I click on the "Agregar Usuario" button', async () => {
+            await this.addUserButton.waitFor();
+            await this.addUserButton.click();
+        });
+
+        await step('THEN I should see the add user form', async () => {
+            await expect(this.page).toHaveURL(this.mariturUser_AddUser);
+        });
+
+        await step('AND I fill the user details', async () => {
+            await this.addUserTextboxName.fill(this.firstName!);
+            await this.addUserTextboxSecondName.fill(this.secondName!);
+            await this.addUserTextboxLastname.fill(this.lastName!);
+            await this.addUserTextboxSecondLastname.fill(this.secondLastName!);
+            await this.addUserTextboxEmail.fill(this.email!);
+        });
+
+        await step('AND I select the role, branch, and concessionaire', async () => {
+            await this.addUserDropdownRole.first().click();
+            await this.addUserDropdownRoleAdmin.click();
+            await this.addUserComboBoxBranch.click();
+            await this.addUserComboBoxBranchOption.click();
+            await this.addUserComboBoxConcessionaire.click();
+            await this.addUserComboBoxConcessionaireOption.click();
+        });
+
+        await step('WHEN I click on the "Agregar" button', async () => {
+            await this.addUserSaveButton.click();
+        });
+
+        await step('THEN I should be redirected to the user module page', async () => {
+            await expect(this.page).toHaveURL(this.mariturUser);
+        });
+
+        await step('AND I should see a success message', async () => {
+            await this.toasterInfo.waitFor();
+            const message = await this.toasterInfo.innerText();
+            console.log('Success message:', message);
+        });
     }
+
 
     async editUser() {
         this.firstName = faker.person.firstName();
         this.secondName = faker.person.firstName();
         this.lastName = faker.person.lastName();
         this.secondLastName = faker.person.lastName();
-
+    
         const homePage = new HomePage(this.page);
-        
-        await homePage.goToUserModule();
-        await this.addUserShowFilterButon.waitFor();
-        await this.addUserShowFilterButon.click()
-        await this.addUserShowFilterComboBox.click();
-        await this.addUserShowFilterComboBoxOption.click();
-        await this.addUserShowFilterComboBoxAddTextArea.click();
-        await this.addUserShowFilterComboBoxAddTextArea.fill('Luxecita');
-        await this.addUserPaginator.waitFor({state: "visible"});
-        await this.addUserOptionButtonUser.first().click();
-        await this.addUserOptionButtonUserEditOption.click();
-        await expect(this.page).toHaveURL(/\/editar/);
-        await this.addUserTextboxName.clear();
-        await this.addUserTextboxName.fill(this.firstName);
-        await this.addUserTextboxSecondName.clear();
-        await this.addUserTextboxSecondName.fill(this.secondName);
-        await this.addUserTextboxLastname.clear();
-        await this.addUserTextboxLastname.fill(this.lastName);
-        await this.addUserTextboxSecondLastname.clear();
-        await this.addUserTextboxSecondLastname.fill(this.secondLastName);
-        await this.editUserUpdateButton.click();
-        await expect(this.page).toHaveURL(this.mariturUser);
+    
+        await step('GIVEN I am on the user module page', async () => {
+            await homePage.goToUserModule();
+        });
+    
+        await step('WHEN I search for a user by email', async () => {
+            await this.addUserShowFilterButon.click();
+            await this.addUserShowFilterComboBox.click();
+            await this.addUserShowFilterComboBoxOption.click();
+            await this.addUserShowFilterComboBoxAddTextArea.fill('Luxecita');
+        });
+    
+        await step('AND I open the edit option', async () => {
+            await this.addUserPaginator.waitFor();
+            await this.addUserOptionButtonUser.first().click();
+            await this.addUserOptionButtonUserEditOption.click();
+        });
+    
+        await step('THEN I should see the edit user form', async () => {
+            await expect(this.page).toHaveURL(/\/editar/);
+        });
+    
+        await step('WHEN I update the user details', async () => {
+            await this.addUserTextboxName.fill(this.firstName!);
+            await this.addUserTextboxSecondName.fill(this.secondName!);
+            await this.addUserTextboxLastname.fill(this.lastName!);
+            await this.addUserTextboxSecondLastname.fill(this.secondLastName!);
+        });
+    
+        await step('AND I save the changes', async () => {
+            await this.editUserUpdateButton.click();
+        });
+    
+        await step('THEN I should be redirected to the user module page', async () => {
+            await expect(this.page).toHaveURL(this.mariturUser);
+        });
     }
+    
 
     async editUserPermissions() {
         const homePage = new HomePage(this.page);
-        
-        await homePage.goToUserModule();
-        await this.addUserShowFilterButon.waitFor();
-        await this.addUserShowFilterButon.click()
-        await this.addUserShowFilterComboBox.click();
-        await this.addUserShowFilterComboBoxOption.click();
-        await this.addUserShowFilterComboBoxAddTextArea.click();
-        await this.addUserShowFilterComboBoxAddTextArea.fill('Luxecita');
-        await this.addUserPaginator.waitFor({state: "visible"});
-        await this.addUserOptionButtonUser.first().click();
-        await this.addUserOptionButtonPermissionEditOption.click()
-        await expect(this.page).toHaveURL(/\/permisos/);
-        await this.editPermissionsUncheckConcessionaireA.uncheck();
-        await this.editPermissionsUncheckConcessionaireB.uncheck();
-        await this.editPermissionsUncheckConcessionaireC.uncheck();
-        await this.editPermissionsUncheckConcessionaireD.uncheck();
-        await this.editPermissionsUncheckConcessionaireA.check();
-        await this.editPermissionsUncheckConcessionaireC.check();
-        await this.editPermissionsUpdateButton.click()
-        await expect(this.page).toHaveURL(this.mariturUser);
+    
+        await step('GIVEN I am on the user module page', async () => {
+            await homePage.goToUserModule();
+        });
+    
+        await step('WHEN I search for a user by email', async () => {
+            await this.addUserShowFilterButon.click();
+            await this.addUserShowFilterComboBox.click();
+            await this.addUserShowFilterComboBoxOption.click();
+            await this.addUserShowFilterComboBoxAddTextArea.fill('Luxecita');
+        });
+    
+        await step('AND I open the edit permissions option', async () => {
+            await this.addUserPaginator.waitFor();
+            await this.addUserOptionButtonUser.first().click();
+            await this.addUserOptionButtonPermissionEditOption.click();
+        });
+    
+        await step('THEN I should see the permissions form', async () => {
+            await expect(this.page).toHaveURL(/\/permisos/);
+        });
+    
+        await step('WHEN I update the permissions', async () => {
+            await this.editPermissionsUncheckConcessionaireA.uncheck();
+            await this.editPermissionsUncheckConcessionaireB.uncheck();
+            await this.editPermissionsUncheckConcessionaireC.uncheck();
+            await this.editPermissionsUncheckConcessionaireD.uncheck();
+            await this.editPermissionsUncheckConcessionaireA.check();
+            await this.editPermissionsUncheckConcessionaireC.check();
+        });
+    
+        await step('AND I save the permissions', async () => {
+            await this.editPermissionsUpdateButton.click();
+        });
+    
+        await step('THEN I should be redirected to the user module page', async () => {
+            await expect(this.page).toHaveURL(this.mariturUser);
+        });
     }
+    
 
     async disableEnableUser() {
         const homePage = new HomePage(this.page);
-        
-        await homePage.goToUserModule();
-        await this.addUserShowFilterButon.waitFor();
-        await this.addUserShowFilterButon.click()
-        await this.addUserShowFilterComboBox.click();
-        await this.addUserShowFilterComboBoxOption.click();
-        await this.addUserShowFilterComboBoxAddTextArea.click();
-        await this.addUserShowFilterComboBoxAddTextArea.fill('Luxecita');
-        await this.addUserPaginator.waitFor({state: "visible"});
-        await this.addUserOptionButtonUser.first().click();
-        await this.disableOptionButton.click();
-        await this.popupDisable.waitFor();
-        await this.disableButton.click();
-        await this.toasterInfo.waitFor();
-        await this.page.waitForTimeout(5000);
-        await this.enableOptionButton.click();
-        await this.popupEnable.waitFor();
-        await this.enableButton.click()
-        await this.toasterInfo.waitFor();
-
+    
+        await step('GIVEN I am on the user module page', async () => {
+            await homePage.goToUserModule();
+        });
+    
+        await step('WHEN I apply a filter to find the user "Luxecita"', async () => {
+            await this.addUserShowFilterButon.waitFor();
+            await this.addUserShowFilterButon.click();
+            await this.addUserShowFilterComboBox.click();
+            await this.addUserShowFilterComboBoxOption.click();
+            await this.addUserShowFilterComboBoxAddTextArea.click();
+            await this.addUserShowFilterComboBoxAddTextArea.fill('Luxecita');
+            await this.addUserPaginator.waitFor({ state: "visible" });
+        });
+    
+        await step('AND I select the user from the list', async () => {
+            await this.addUserOptionButtonUser.first().click();
+        });
+    
+        await step('WHEN I click on the "Desactivar" button', async () => {
+            await this.disableOptionButton.click();
+        });
+    
+        await step('THEN a confirmation popup should appear', async () => {
+            await this.popupDisable.waitFor();
+        });
+    
+        await step('WHEN I confirm the deactivation', async () => {
+            await this.disableButton.click();
+            await this.toasterInfo.waitFor();
+            await this.page.waitForTimeout(5000);
+        });
+    
+        await step('AND I enable the user again', async () => {
+            await this.enableOptionButton.click();
+            await this.popupEnable.waitFor();
+            await this.enableButton.click();
+            await this.toasterInfo.waitFor();
+        });
+    
+        await step('THEN the user should be successfully enabled', async () => {
+            console.log('User enabled successfully!');
+        });
     }
 
     async deleteUser() {
         const homePage = new HomePage(this.page);
-        
-        await homePage.goToUserModule();
-        await this.addUserShowFilterButon.waitFor();
-        await this.addUserShowFilterButon.click()
-        await this.addUserShowFilterComboBox.click();
-        await this.addUserShowFilterComboBoxOption.click();
-        await this.addUserShowFilterComboBoxAddTextArea.click();
-        await this.addUserShowFilterComboBoxAddTextArea.fill('Luxecita');
-        await this.addUserPaginator.waitFor({state: "visible"});
-        await this.addUserOptionButtonUser.first().click();
-        await this.eliminateOptionButton.click();
-        await this.popupEliminate.waitFor();
-        await this.eliminateButton.click();
-        await this.toasterInfo.waitFor();
-
-
+    
+        await step('GIVEN I am on the user module page', async () => {
+            await homePage.goToUserModule();
+        });
+    
+        await step('WHEN I search for a user by email', async () => {
+            await this.addUserShowFilterButon.click();
+            await this.addUserShowFilterComboBox.click();
+            await this.addUserShowFilterComboBoxOption.click();
+            await this.addUserShowFilterComboBoxAddTextArea.fill('Luxecita');
+        });
+    
+        await step('AND I select the delete option', async () => {
+            await this.addUserPaginator.waitFor();
+            await this.addUserOptionButtonUser.first().click();
+            await this.eliminateOptionButton.click();
+        });
+    
+        await step('THEN I should see a confirmation popup', async () => {
+            await this.popupEliminate.waitFor();
+        });
+    
+        await step('WHEN I confirm the deletion', async () => {
+            await this.eliminateButton.click();
+        });
+    
+        await step('THEN I should see a success message', async () => {
+            await this.toasterInfo.waitFor();
+        });
     }
+    
 }

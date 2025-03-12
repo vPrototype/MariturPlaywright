@@ -1,10 +1,23 @@
 import { config as dotenvConfig } from 'dotenv';
 import { Helper } from '../utils/Helpers';
+import { execSync } from 'child_process';
+
+import * as fs from 'node:fs';
 
 //Por default nos vamos a dev pero puedes ejecutar de la siguiente manera
 //npm run test:dev <-- Ambiente dev
 //npm run test:stage <-- Ambiente stage
 dotenvConfig({ path: `.env.${process.env.NODE_ENV || 'dev'}` });
+
+export default function globalSettings() {
+  // Elimina allure-results y allure-report si existen
+  if (fs.existsSync('allure-results')) {
+      execSync('rm -rf allure-results || rd /s /q allure-results');
+  }
+  if (fs.existsSync('allure-report')) {
+      execSync('rm -rf allure-report || rd /s /q allure-report');
+  }
+}
 
 //Asignar sus propiedades
 interface Config {
@@ -18,17 +31,18 @@ interface Config {
 
     itineraryModuleUrl: string;
     userModuleUrl: string;
-    userModuleAddUserUrl:string
-    branchModuleUrl: string
-    serviceModuleUrl: string
-    documentModuleUrl: string
-    roleModuleUrl: string
-    supplierModuleUrl: string
-    bankAccountModuleUrl: string
-    concessionaireModuleUrl: string
-    clientModuleUrl: string
-    hotelModuleUrl: string
-    configModuleUrl: string
+    userModuleAddUserUrl:string;
+    branchModuleUrl: string;
+    branchModuleAddBranchUrl: string;
+    serviceModuleUrl: string;
+    documentModuleUrl: string;
+    roleModuleUrl: string;
+    supplierModuleUrl: string;
+    bankAccountModuleUrl: string;
+    concessionaireModuleUrl: string;
+    clientModuleUrl: string;
+    hotelModuleUrl: string;
+    configModuleUrl: string;
 
     
   };
@@ -54,6 +68,7 @@ export const config: Config = {
     userModuleAddUserUrl: process.env.MARITUR_USER_MODULE_ADDUSER!,
     
     branchModuleUrl: process.env.MARITUR_BRANCH_MODULE!,
+    branchModuleAddBranchUrl: process.env.MARITUR_BRANCH_MODULE_ADDBRANCH!,
 
     serviceModuleUrl: process.env.MARITUR_SERVICE_MODULE!,
     

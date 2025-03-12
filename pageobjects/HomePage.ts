@@ -1,6 +1,6 @@
 import { config } from '../config/globalSettings';
 import { expect, Page, Locator } from "@playwright/test";
-
+import { step } from "allure-js-commons";
 
 export class HomePage {
 
@@ -18,7 +18,7 @@ export class HomePage {
     private hotelModule: Locator;
     private configModule: Locator;
 
-      //Aquí van las variables que serán llamadas desde el global
+    // Aquí van las variables que serán llamadas desde el global
     private mariturItinerary: string;
     private mariturUser: string;
     private mariturBranch: string;
@@ -33,8 +33,7 @@ export class HomePage {
     private mariturConfig: string;
 
     constructor(private readonly page: Page) {
-
-          //llamando desde el globalSettings
+        // Llamando desde el globalSettings
         this.mariturItinerary = config.urls.itineraryModuleUrl;
         this.mariturUser = config.urls.userModuleUrl;
         this.mariturBranch = config.urls.branchModuleUrl;
@@ -42,7 +41,7 @@ export class HomePage {
         this.mariturDocument = config.urls.documentModuleUrl;
         this.mariturRole = config.urls.roleModuleUrl;
         this.mariturSupplier = config.urls.supplierModuleUrl;
-        this.mariturBankAccount = config.urls.bankAccountModuleUrl; 
+        this.mariturBankAccount = config.urls.bankAccountModuleUrl;
         this.mariturConcessionaire = config.urls.concessionaireModuleUrl;
         this.mariturClient = config.urls.clientModuleUrl;
         this.mariturHotel = config.urls.hotelModuleUrl;
@@ -60,83 +59,103 @@ export class HomePage {
         this.concessionaireModule = page.getByRole('link', { name: 'Concesiones' });
         this.clientModule = page.getByRole('link', { name: 'Clientes' });
         this.hotelModule = page.getByRole('link', { name: 'Hoteles' });
-        this.configModule =  page.getByRole('link', { name: 'Configuración' });
-        
+        this.configModule = page.getByRole('link', { name: 'Configuración' });
     }
 
     // Interacción con los elementos ↓
-    // Aquí empiezan los métodos ↓
     async goToItineraryModule() {
-        await this.itineraryModule.waitFor();
-        await this.itineraryModule.click();
-        await expect(this.page).toHaveURL(this.mariturItinerary);
-        //await expect(this.page).toHaveScreenshot('itinerary_Module_snap.png');
+        await step('GIVEN I am on the itinerary module page', async () => {
+            await this.itineraryModule.waitFor();
+            await this.itineraryModule.click();
+            await expect(this.page).toHaveURL(this.mariturItinerary);
+        });
     }
 
-    async goToUserModule(){
-        await this.userModule.waitFor();
-        await this.userModule.click();
-        await expect(this.page).toHaveURL(this.mariturUser);
-        //await expect(this.page).toHaveScreenshot('itinerary_Module_snap.png');
+    async goToUserModule() {
+        await step('GIVEN I am on the user module page', async () => {
+            await this.userModule.waitFor();
+            await this.userModule.click();
+            await expect(this.page).toHaveURL(this.mariturUser);
+        });
     }
 
-    async goToBranchModule(){
-        await this.branchModule.waitFor();
-        await this.branchModule.click();
-        await expect(this.page).toHaveURL(this.mariturBranch);
+    async goToBranchModule() {
+        await step('GIVEN I am on the branch module page', async () => {
+            await this.branchModule.waitFor();
+            await this.branchModule.click();
+            await expect(this.page).toHaveURL(this.mariturBranch);
+        });
     }
 
-    async goToServiceModule(){
-        await this.serviceModule.waitFor();
-        await this.serviceModule.click();
-        await expect(this.page).toHaveURL(this.mariturService);
+    async goToServiceModule() {
+        await step('GIVEN I am on the service module page', async () => {
+            await this.serviceModule.waitFor();
+            await this.serviceModule.click();
+            await expect(this.page).toHaveURL(this.mariturService);
+        });
     }
 
-    async goToDocumentModule(){
-        await this.documentModule.waitFor();
-        await this.documentModule.click();
-        await expect(this.page).toHaveURL(this.mariturDocument);
+    async goToDocumentModule() {
+        await step('GIVEN I am on the document module page', async () => {
+            await this.documentModule.waitFor();
+            await this.documentModule.click();
+            await expect(this.page).toHaveURL(this.mariturDocument);
+        });
     }
 
-    async goToRoleModule(){
-        await this.roleModule.waitFor();
-        await this.roleModule.click();
-        await expect(this.page).toHaveURL(this.mariturRole);
+    async goToRoleModule() {
+        await step('GIVEN I am on the role module page', async () => {
+            await this.roleModule.waitFor();
+            await this.roleModule.click();
+            await expect(this.page).toHaveURL(this.mariturRole);
+        });
     }
 
-    async goToSupplierModule(){
-        await this.supplierModule.waitFor();
-        await this.supplierModule.click();
-        await expect(this.page).toHaveURL(this.mariturSupplier);
+    async goToSupplierModule() {
+        await step('GIVEN I am on the supplier module page', async () => {
+            await this.supplierModule.waitFor();
+            await this.supplierModule.click();
+            await expect(this.page).toHaveURL(this.mariturSupplier);
+        });
     }
 
-    async goToBankAccountModule(){
-        await this.bankAccountModule.waitFor();
-        await this.bankAccountModule.click();
-        await expect(this.page).toHaveURL(this.mariturBankAccount);
+    async goToBankAccountModule() {
+        await step('GIVEN I am on the bank account module page', async () => {
+            await this.bankAccountModule.waitFor();
+            await this.bankAccountModule.click();
+            await expect(this.page).toHaveURL(this.mariturBankAccount);
+        });
     }
 
-    async goToConcessionaireModule(){
-        await this.concessionaireModule.waitFor();
-        await this.concessionaireModule.click();
-        await expect(this.page).toHaveURL(this.mariturConcessionaire);
+    async goToConcessionaireModule() {
+        await step('GIVEN I am on the concessionaire module page', async () => {
+            await this.concessionaireModule.waitFor();
+            await this.concessionaireModule.click();
+            await expect(this.page).toHaveURL(this.mariturConcessionaire);
+        });
     }
 
-    async goToClientModule(){
-        await this.clientModule.waitFor();
-        await this.clientModule.click();
-        await expect(this.page).toHaveURL(this.mariturClient);
+    async goToClientModule() {
+        await step('GIVEN I am on the client module page', async () => {
+            await this.clientModule.waitFor();
+            await this.clientModule.click();
+            await expect(this.page).toHaveURL(this.mariturClient);
+        });
     }
 
-    async goToHotelModule(){
-        await this.hotelModule.waitFor();
-        await this.hotelModule.click();
-        await expect(this.page).toHaveURL(this.mariturHotel);
+    async goToHotelModule() {
+        await step('GIVEN I am on the hotel module page', async () => {
+            await this.hotelModule.waitFor();
+            await this.hotelModule.click();
+            await expect(this.page).toHaveURL(this.mariturHotel);
+        });
     }
 
-    async goToConfigModule(){
-        await this.configModule.waitFor();
-        await this.configModule.click();
-        await expect(this.page).toHaveURL(this.mariturConfig);
+    async goToConfigModule() {
+        await step('GIVEN I am on the config module page', async () => {
+            await this.configModule.waitFor();
+            await this.configModule.click();
+            await expect(this.page).toHaveURL(this.mariturConfig);
+        });
     }
 }
