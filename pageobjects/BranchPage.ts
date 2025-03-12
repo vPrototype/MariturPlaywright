@@ -84,7 +84,7 @@ export class BranchPage{
         });
     
         await step('THEN the user should be redirected to the "Add Branch" form', async () => {
-            await this.page.waitForURL(this.mariturBranch_AddBranch);
+            this.page.waitForNavigation({ waitUntil: 'networkidle' })
             await expect(this.page).toHaveURL(this.mariturBranch_AddBranch);
         });
     
@@ -129,6 +129,7 @@ export class BranchPage{
         });
     
         await step('THEN the user should be redirected to the "Add Branch" form', async () => {
+            this.page.waitForNavigation({ waitUntil: 'networkidle' })
             await expect(this.page).toHaveURL(/\/editar/);
         });
     
