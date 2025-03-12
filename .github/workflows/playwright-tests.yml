@@ -16,37 +16,40 @@ jobs:
       CI: true
       ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
       ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-      MARITUR_HOME_MODULE: ${{ vars.MARITUR_HOME_MODULE }}
-      MARITUR_ITINERARY_MODULE: ${{ vars.MARITUR_ITINERARY_MODULE }}
-      MARITUR_USER_MODULE: ${{ vars.MARITUR_USER_MODULE }}
-      MARITUR_USER_MODULE_ADDUSER: ${{ vars.MARITUR_USER_MODULE_ADDUSER }}
-      MARITUR_BRANCH_MODULE: ${{ vars.MARITUR_BRANCH_MODULE }}
-      MARITUR_SERVICE_MODULE: ${{ vars.MARITUR_SERVICE_MODULE }}
-      MARITUR_DOCUMENT_MODULE: ${{ vars.MARITUR_DOCUMENT_MODULE }}
-      MARITUR_ROLE_MODULE: ${{ vars.MARITUR_ROLE_MODULE }}
-      MARITUR_SUPPLIER_MODULE: ${{ vars.MARITUR_SUPPLIER_MODULE }}
-      MARITUR_BANKACCOUNT_MODULE: ${{ vars.MARITUR_BANKACCOUNT_MODULE }}
-      MARITUR_CONCESSIONAIRE_MODULE: ${{ vars.MARITUR_CONCESSIONAIRE_MODULE }}
-      MARITUR_CLIENT_MODULE: ${{ vars.MARITUR_CLIENT_MODULE }}
-      MARITUR_HOTEL_MODULE: ${{ vars.MARITUR_HOTEL_MODULE }}
-      MARITUR_CONFIG_MODULE: ${{ vars.MARITUR_CONFIG_MODULE }}
+      
+      # ✅ Agrupación de variables MARITUR para mejor organización
+      MARITUR: |
+        HOME_MODULE=${{ vars.MARITUR_HOME_MODULE }}
+        ITINERARY_MODULE=${{ vars.MARITUR_ITINERARY_MODULE }}
+        USER_MODULE=${{ vars.MARITUR_USER_MODULE }}
+        USER_MODULE_ADDUSER=${{ vars.MARITUR_USER_MODULE_ADDUSER }}
+        BRANCH_MODULE=${{ vars.MARITUR_BRANCH_MODULE }}
+        SERVICE_MODULE=${{ vars.MARITUR_SERVICE_MODULE }}
+        DOCUMENT_MODULE=${{ vars.MARITUR_DOCUMENT_MODULE }}
+        ROLE_MODULE=${{ vars.MARITUR_ROLE_MODULE }}
+        SUPPLIER_MODULE=${{ vars.MARITUR_SUPPLIER_MODULE }}
+        BANKACCOUNT_MODULE=${{ vars.MARITUR_BANKACCOUNT_MODULE }}
+        CONCESSIONAIRE_MODULE=${{ vars.MARITUR_CONCESSIONAIRE_MODULE }}
+        CLIENT_MODULE=${{ vars.MARITUR_CLIENT_MODULE }}
+        HOTEL_MODULE=${{ vars.MARITUR_HOTEL_MODULE }}
+        CONFIG_MODULE=${{ vars.MARITUR_CONFIG_MODULE }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0  # Permite obtener todas las referencias para versiones anteriores si es necesario
 
-      # Cache para npm usando actions/cache@v4
+      # ✅ Cache para npm usando actions/cache@v4
       - name: Cache npm dependencies
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: node-cache-Linux-x64-npm-${{ hashFiles('package-lock.json') }}
+          key: node-cache-${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            node-cache-Linux-x64-npm-
+            node-cache-${{ runner.os }}-npm-
 
-      # Setup de Node.js
+      # ✅ Setup de Node.js y cache
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -54,43 +57,40 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package-lock.json
 
-      # Instalar dependencias
-      - name: Install dependencies
-        run: npm ci
+      # ✅ Instalar dependencias y navegadores de Playwright
+      - name: Install dependencies and Playwright Browsers
+        run: |
+          npm ci
+          npx playwright install --with-deps
 
-      # Verificar variables de entorno
+      # ✅ Verificar variables de entorno
       - name: Verify environment variables
         run: env | grep MARITUR  
 
-      # Instalar TypeScript y compilar
-      - name: Install TypeScript & Compile
-        run: |
-          npm install --save-dev typescript
-          npx tsc --project tsconfig.json
+      # ✅ Instalar TypeScript directamente desde las dependencias
+      - name: Compile TypeScript
+        run: npx tsc --project tsconfig.json
 
-      # Instalar navegadores de Playwright
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
-      # Instalar versión estable de allure-commandline
+      # ✅ Instalar versión estable de allure-commandline
       - name: Install Allure Commandline
         run: npm install --save-dev allure-commandline@2.20.1
 
-      # Ejecución de pruebas
+      # ✅ Ejecución de pruebas con entorno CI
       - name: Run Playwright tests
         run: npx playwright test
         env:
           CI: true
 
-      # Generar reporte con allure-commandline
+      # ✅ Generar reporte solo si las pruebas se ejecutan
       - name: Generate Allure Report
         if: always()
         run: npx allure-commandline generate test-results/ --clean -o allure-report
       
-      # Subir el reporte generado
+      # ✅ Subir reporte generado solo si existe
       - name: Upload Allure Report
-        if: always()
+        if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report
+          retention-days: 5  # Limpieza automática después de 5 días
