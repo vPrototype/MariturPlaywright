@@ -18,7 +18,8 @@ export default defineConfig({
     ['allure-playwright']
   ],  //'html', <-- antigua configuración antes de instalar allure reports
   use: {
-    headless: false, // Desactiva el modo headless para todos los proyectos
+    headless: process.env.CI ? true : false,
+    //headless: false, // Desactiva el modo headless para todos los proyectos
     baseURL: process.env.BASE_URL,
     //trace: 'on-first-retry', <-- antigua configuración antes de instalar allure
     screenshot: 'on',
