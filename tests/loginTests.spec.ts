@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto(maritur_Home);
 });
 
-test.skip('loginTest', async ({ page }) => {
+test('loginTest', async ({ page }) => {
  
   const adminEmail = config.credentials.adminUser;
   const adminPassword = config.credentials.adminPass;
