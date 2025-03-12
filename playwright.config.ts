@@ -18,10 +18,11 @@ export default defineConfig({
   reporter: [
     ['list'],
     ['allure-playwright', {
-      outputFolder: 'allure-results', // Definir el folder de resultados
+      outputFolder: 'allure-results', // Definir el folder de resultados de Allure
       suiteTitle: true, // Mostrar el título de la suite en el reporte
       details: true // Mostrar detalles de la prueba en el reporte
-    }]
+    }],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }] // Reporte HTML de Playwright
   ],
 
   // Configuración del entorno de pruebas
